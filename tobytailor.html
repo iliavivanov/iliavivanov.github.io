@@ -7,7 +7,10 @@
     <script type="text/javascript" src="resources/js/tobytailor/get_barcode_from_image.js"></script>
 </head>
 <body>
+<!--
 <img id="barcode" src="resources/assets/barcode.png">
+-->
+<input accept="image/jpeg;capture=camera" id="barcode" type="file">
 <br>
 <button onclick="alert(getBarcodeFromImage('barcode'))">Scan</button>
 </body>
