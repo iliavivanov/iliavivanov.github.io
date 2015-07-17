@@ -7,11 +7,38 @@
     <script type="text/javascript" src="resources/js/tobytailor/get_barcode_from_image.js"></script>
 </head>
 <body>
-<!--
+<input accept="image/jpeg;capture=camera" id="take-picture" type="file">
 <img id="barcode" src="resources/assets/barcode.png">
--->
-<input accept="image/jpeg;capture=camera" id="barcode" type="file">
 <br>
 <button onclick="alert(getBarcodeFromImage('barcode'))">Scan</button>
+
+<script type="text/javascript">
+    var takePicture = document.querySelector("#take-picture");
+    takePicture.onchange = function (event) {
+        // Get a reference to the taken picture or chosen file
+        var files = event.target.files,
+                file;
+        if (files && files.length > 0) {
+            file = files[0];
+        }
+
+        // Image reference
+        var showPicture = document.querySelector("#show-picture");
+
+        // Create ObjectURL
+        var imgURL = window.URL.createObjectURL(file);
+
+        // Set img src to ObjectURL
+        showPicture.src = imgURL;
+
+        // For performance reasons, revoke used ObjectURLs
+        URL.revokeObjectURL(imgURL);
+
+
+    };
+
+</script>
+
+
 </body>
 </html>
