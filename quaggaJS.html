@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>quaggaJS</title>
+
+    <script type="text/javascript" src="https://github.com/serratus/quaggaJS/blob/master/dist/quagga.js"></script>
+    <script type="text/javascript">
+        //var quagga = require('quagga');
+        Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream"
+            },
+            decoder: {
+                readers: ["code_128_reader"]
+            }
+        }, function (err) {
+            if (err) {
+                console.log(err);
+                return
+            }
+            console.log("Initialization finished. Ready to start");
+            Quagga.start();
+        });
+    </script>
+</head>
+<body>
+
+
+</body>
+</html>
