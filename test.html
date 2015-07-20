@@ -133,12 +133,25 @@
             document.querySelector('img').src = canvas.toDataURL('image/webp');
 
 
-
         }
     }
 
 
-    video.addEventListener('click', makeScreenShot, false);
+//    video.addEventListener('click', makeScreenShot, false);
+
+    var i;
+    video.addEventListener('play', function () {
+        i = window.setInterval(makeScreenShot, 1000);
+    }, false);
+
+    video.addEventListener('pause', function () {
+        window.clearInterval(i);
+    }, false);
+
+    video.addEventListener('ended', function () {
+        clearInterval(i);
+    }, false);
+
 
 </script>
 
