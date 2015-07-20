@@ -18,8 +18,14 @@
 <h2>Input 'video'</h2>
 <input type="file" accept="video/*;capture=camcorder">
 
-
-
+<h2>Device </h2>
+<device type="media" onchange="update(this.data)"></device>
+<video autoplay></video>
+<script>
+    function update(stream) {
+        document.querySelector('video').src = stream.url;
+    }
+</script>
 
 <script src="resources/js/quaggaJS/jquery-1.9.0.min.js" type="text/javascript"></script>
 </body>
