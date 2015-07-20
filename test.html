@@ -27,21 +27,22 @@
     var video = document.querySelector('video');
 
     <!-- Feature 'getUserMedia' detection -->
-    navigator.getUserMedia =    navigator.getUserMedia ||
-                                navigator.webkitGetUserMedia ||
-                                navigator.mozGetUserMedia ||
-                                navigator.msGetUserMedia;
+    navigator.getUserMedia = navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia;
 
-
-    <!-- Gaining access to an input device -->
-    var errorCallback = function (e) {
-        alert('Access Reeeejected!');
-        console.log('Reeeejected!', e);
-    };
 
     // Not showing vendor prefixes.
-    navigator.getUserMedia({video: true, audio: false}, function (localMediaStream) {
-        var video = document.querySelector('video');
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia({audio: false, video: true},
+                successCallback,
+                errorCallback);
+    } else {
+        alert('getUserMedia() is NOT SUPPORTED in your browser!');
+    }
+
+    var successCallback = function (e) {
         video.src = window.URL.createObjectURL(localMediaStream);
 
         // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
@@ -49,15 +50,13 @@
         video.onloadedmetadata = function (e) {
             alert('Ready to go. Do some stuff!');
         };
-    }, errorCallback);
+    };
 
-    if (navigator.getUserMedia) {
-        navigator.getUserMedia({audio: false, video: true}, function (localMediaStream) {
-            video.src = window.URL.createObjectURL(stream);
-        }, errorCallback);
-    } else {
-        alert('getUserMedia() is NOT SUPPORTED in your browser!');
-    }
+    var errorCallback = function(e) {
+        alert('Reeeejected!');
+        console.log('Reeeejected!', e);
+    };
+
 
 
 </script>
