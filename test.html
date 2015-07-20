@@ -21,14 +21,10 @@
 -->
 
 <h2>Device</h2>
-<device type="media" onchange="update(this.data)"></device>
 <video autoplay></video>
 <script>
     var video = document.querySelector('video');
 
-    function update(stream) {
-        video.src = stream.url;
-    }
 
     <!-- Feature 'getUserMedia' detection -->
     navigator.getUserMedia = navigator.getUserMedia ||
@@ -47,7 +43,7 @@
         alert('getUserMedia() is NOT SUPPORTED in your browser!');
     }
 
-    var successCallback = function () {
+    var successCallback = function (localMediaStream) {
         video.src = window.URL.createObjectURL(localMediaStream);
 
         // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
