@@ -118,6 +118,7 @@
         var videoSourceId;
         for (var i = 0; i != sourceInfos.length; ++i) {
             var source = sourceInfos[i];
+            alert("id" + source.id +" facing "+ source.facing);
             if (source.kind == "video" && source.facing == "environment") {
                 videoSourceId = source.id;
             }
