@@ -9,6 +9,17 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0"/>
     <link rel="stylesheet" type="text/css" href="resources/css/quaggaJS/styles.css"/>
 
+    <style>
+        video {
+            object-fit: cover;
+        }
+        @media screen and (min-width: 1000px) {
+            video {
+                height: 480px;
+            }
+        }
+    </style>
+
 </head>
 <body>
 
@@ -23,29 +34,45 @@
 <h2>VIDEO AUTOPLAY</h2>
 <video autoplay></video>
 <script>
-    var video = document.querySelector('video');
 
-
-    var errorCallback = function(e) {
-        console.log('Reeeejected!', e);
-    };
-
-    navigator.getUserMedia  = navigator.getUserMedia ||
+    navigator.getUserMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia ||
     navigator.msGetUserMedia;
 
+    var constraints = {
+        audio: false,
+        video: true
+    };
+
     var video = document.querySelector('video');
 
-    if (navigator.getUserMedia) {
-        navigator.getUserMedia({audio: true, video: true}, function(stream) {
+    function successCallback(stream) {
+        window.stream = stream; // stream available to console
+        if (window.URL) {
             video.src = window.URL.createObjectURL(stream);
-        }, errorCallback);
-    } else {
-        video.src = 'somevideo.webm'; // fallback.
+        } else {
+            video.src = stream;
+        }
     }
 
+    function errorCallback(error) {
+        console.log('Reeeejected!', error);
+        if (error instanceof PermissionDeniedError) {
+            alert('Permission to use a media device was denied by the user or the system!');
+            console.log('Permission to use a media device was denied by the user or the system!', error);
+        }
+        if (error instanceof NotFoundError) {
+            alert('No media tracks of the type specified were found that satisfy the constraints specified!');
+            console.log('No media tracks of the type specified were found that satisfy the constraints specified!', error);
+        }
+    };
 
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia(constraints, successCallback, errorCallback);
+    } else {
+        alert('getUserMedia() IS NOT SUPPORTED in your browser');
+    }
 
 </script>
 
