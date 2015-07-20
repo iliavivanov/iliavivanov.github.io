@@ -24,7 +24,6 @@
 <device type="media" onchange="update(this.data)"></device>
 <video autoplay></video>
 <script>
-    <!-- HTML5 Media Capture -->
     function update(stream) {
         document.querySelector('video').src = stream.url;
     }
@@ -56,7 +55,7 @@
     };
 
     // Not showing vendor prefixes.
-    navigator.getUserMedia({video: true, audio: true}, function(localMediaStream) {
+    navigator.getUserMedia({video: true, audio: false}, function(localMediaStream) {
         var video = document.querySelector('video');
         alert('1!');
         video.src = window.URL.createObjectURL(localMediaStream);
@@ -72,7 +71,7 @@
     var video = document.querySelector('video');
 
     if (navigator.getUserMedia) {
-        navigator.getUserMedia({audio: true, video: true}, function(stream) {
+        navigator.getUserMedia({audio: false, video: true}, function(stream) {
             alert('3!');
             video.src = window.URL.createObjectURL(stream);
             alert('4!');
