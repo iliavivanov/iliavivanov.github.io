@@ -116,9 +116,10 @@
         }
     }
 
-    function makeScreenshot() {
+    function makeScreenShot() {
         if (localMediaStream) {
             // http://www.html5canvastutorials.com/tutorials/html5-canvas-image-crop/
+            alert("video.width = " + video.width)
             var sourceX = 0;
             var sourceY = 10;
             var sourceWidth = video.width;
@@ -138,7 +139,7 @@
 
 
 
-    video.addEventListener('click', makeScreenshot, false);
+    video.addEventListener('click', makeScreenShot, false);
 
 </script>
 
