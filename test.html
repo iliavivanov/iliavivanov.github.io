@@ -45,11 +45,6 @@
 
     var video = document.querySelector('video');
 
-    var constraints = {
-        audio: false,
-        video: true
-    };
-
     function successCallback(stream) {
         window.stream = stream; // stream available to console
         if (window.URL) {
@@ -73,28 +68,34 @@
     }
 
     if (typeof MediaStreamTrack === 'undefined') {
-        alert('This browser does not support MediaStreamTrack.\n\nTry Chrome Canary.');
+        alert('This browser does not support MediaStreamTrack!\n\nTry Chrome Canary!');
+        getUserMedia();
     } else {
         MediaStreamTrack.getSources(onSourcesAcquired);
     }
 
+    var constraints = {
+        audio: false,
+        video: true
+    };
+
     function onSourcesAcquired(sourceInfos) {
         var videoSourceId;
-        alert(videoSourceId);
-        alert(videoSourceId==null);
         for (var i = 0; i != sourceInfos.length; ++i) {
             var source = sourceInfos[i];
             if (source.kind == "video" && source.facing == "environment") {
                 videoSourceId = source.id;
             }
         }
-        alert(videoSourceId);
-        alert(videoSourceId==null);
-        constraints.video = {
-            optional: [{
-                sourceId: videoSourceId
-            }]
-        };
+        if (videoSourceId == null) {
+            alert('Can not find environment camera. Default camera is used!');
+        } else {
+            constraints.video = {
+                optional: [{
+                    sourceId: videoSourceId
+                }]
+            };
+        }
 
         getUserMedia();
     }
