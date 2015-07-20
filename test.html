@@ -21,10 +21,14 @@
 -->
 
 <h2>Device</h2>
-<device type="media"></device>
+<device type="media" onchange="update(this.data)"></device>
 <video autoplay></video>
 <script>
     var video = document.querySelector('video');
+
+    function update(stream) {
+        video.src = stream.url;
+    }
 
     <!-- Feature 'getUserMedia' detection -->
     navigator.getUserMedia = navigator.getUserMedia ||
