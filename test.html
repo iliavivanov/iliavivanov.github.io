@@ -123,6 +123,7 @@
     }
 
     if (navigator.getUserMedia) {
+        alert("constraints " + constraints);
         navigator.getUserMedia(constraints, successCallback, errorCallback);
     } else {
         alert('getUserMedia() IS NOT SUPPORTED in your browser');
