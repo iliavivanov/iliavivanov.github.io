@@ -41,21 +41,20 @@
     if (navigator.getUserMedia) {
         alert('getUserMedia() is SUPPORTED in your browser!');
         navigator.getUserMedia({audio: false, video: true},
-                successCallback,
+                function (localMediaStream) {
+                    video.src = window.URL.createObjectURL(localMediaStream);
+
+                    // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
+                    // See crbug.com/110938.
+                    video.onloadedmetadata = function (e) {
+                        alert('Ready to go. Do some stuff!');
+                    };
+                },
                 errorCallback);
     } else {
         alert('getUserMedia() is NOT SUPPORTED in your browser!');
     }
 
-    var successCallback = function (localMediaStream) {
-        video.src = window.URL.createObjectURL(localMediaStream);
-
-        // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
-        // See crbug.com/110938.
-        video.onloadedmetadata = function (e) {
-            alert('Ready to go. Do some stuff!');
-        };
-    };
 
     var errorCallback = function(e) {
         alert('Reeeejected!');
