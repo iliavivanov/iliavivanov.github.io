@@ -34,9 +34,12 @@
 
 <h2>VIDEO AUTOPLAY</h2>
 <video muted autoplay></video>
+
+<select id="audioSource"></select>
+<select id="videoSource"></select>
+
 <script>
 
-    <!-- Эта директива не поддерживается IE9- -->
     "use strict";
 
     navigator.getUserMedia = navigator.getUserMedia ||
@@ -73,17 +76,48 @@
         }
     }
 
+
+
+    var audioSelect = document.querySelector('select#audioSource');
+    var videoSelect = document.querySelector('select#videoSource');
+    function gotSources(sourceInfos) {
+        for (var i = 0; i !== sourceInfos.length; ++i) {
+            var sourceInfo = sourceInfos[i];
+            var option = document.createElement('option');
+            option.value = sourceInfo.id;
+            if (sourceInfo.kind === 'audio') {
+                option.text = sourceInfo.label || 'microphone ' + (audioSelect.length + 1);
+                audioSelect.appendChild(option);
+            } else if (sourceInfo.kind === 'video') {
+                option.text = sourceInfo.label || 'camera ' + (videoSelect.length + 1);
+                videoSelect.appendChild(option);
+            } else {
+                console.log('Some other kind of source: ', sourceInfo);
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     if (typeof MediaStreamTrack === 'undefined'){
         alert('This browser does not support MediaStreamTrack.\n\nTry Chrome Canary.');
     } else {
         MediaStreamTrack.getSources(onSourcesAcquired);
+        MediaStreamTrack.getSources(gotSources);
     }
 
-    function onSourcesAcquired(sources) {
+    function onSourcesAcquired(sourceInfos) {
         alert("!");
         var videoSourceId;
-        for (var i = 0; i != sources.length; ++i) {
-            var source = sources[i];
+        for (var i = 0; i != sourceInfos.length; ++i) {
+            var source = sourceInfos[i];
             if (source.kind == "video" && source.facing == "environment") {
                 videoSourceId = source.id;
             }
