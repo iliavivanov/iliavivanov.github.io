@@ -118,7 +118,9 @@
 
     function makeScreenShot() {
         if (localMediaStream) {
-            ctx.drawImage(video, 0, 0, 100, 100);
+            ctx.drawImage(video,
+                    0, 0, 100, 3,
+                    0, 0, 100, 3);
 
 //
 //            var searchArea = ctx.getImageData(0, 0, 100, 100);
@@ -137,7 +139,7 @@
     }
 
 
-//    video.addEventListener('click', makeScreenShot, false);
+    //    video.addEventListener('click', makeScreenShot, false);
 
     var i;
     video.addEventListener('play', function () {
