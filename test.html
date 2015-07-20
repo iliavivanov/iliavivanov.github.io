@@ -80,6 +80,7 @@
     }
 
     function onSourcesAcquired(sources) {
+        alert("!");
         var videoSourceId;
         for (var i = 0; i != sources.length; ++i) {
             var source = sources[i];
@@ -87,7 +88,6 @@
                 videoSourceId = source.id;
             }
         }
-        alert(videoSourceId);
         constraints.video = {
             optional: [{
                 sourceId: videoSourceId
