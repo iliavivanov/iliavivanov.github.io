@@ -77,7 +77,6 @@
     }
 
 
-
     var audioSelect = document.querySelector('select#audioSource');
     var videoSelect = document.querySelector('select#videoSource');
     function gotSources(sourceInfos) {
@@ -98,15 +97,7 @@
     }
 
 
-
-
-
-
-
-
-
-
-    if (typeof MediaStreamTrack === 'undefined'){
+    if (typeof MediaStreamTrack === 'undefined') {
         alert('This browser does not support MediaStreamTrack.\n\nTry Chrome Canary.');
     } else {
         MediaStreamTrack.getSources(onSourcesAcquired);
@@ -118,7 +109,7 @@
         var videoSourceId;
         for (var i = 0; i != sourceInfos.length; ++i) {
             var source = sourceInfos[i];
-            alert("id" + source.id +" facing "+ source.facing);
+            alert("kind " + source.kind + " id " + source.id + " facing " + source.facing);
             if (source.kind == "video" && source.facing == "environment") {
                 videoSourceId = source.id;
             }
