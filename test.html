@@ -25,8 +25,24 @@
     function update(stream) {
         document.querySelector('video').src = stream.url;
     }
+    function hasGetUserMedia() {
+        return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia || navigator.msGetUserMedia);
+    }
+
+    if (hasGetUserMedia()) {
+        alert('getUserMedia() is supported in your browser!');
+        // Good to go!
+    } else {
+        alert('getUserMedia() is not supported in your browser!');
+    }
+
+
+
 </script>
 
+<!--
 <script src="resources/js/quaggaJS/jquery-1.9.0.min.js" type="text/javascript"></script>
+-->
 </body>
 </html>
