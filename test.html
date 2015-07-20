@@ -119,7 +119,7 @@
     function makeScreenShot() {
         if (localMediaStream) {
             // http://www.html5canvastutorials.com/tutorials/html5-canvas-image-crop/
-            alert("video.width = " + video.width)
+            /*alert("video.width = " + video.width)
             var sourceX = 0;
             var sourceY = 10;
             var sourceWidth = video.width;
@@ -128,7 +128,8 @@
             var destY = sourceY;
             var destWidth = sourceWidth;
             var destHeight = sourceHeight;
-            ctx.drawImage(video, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+            ctx.drawImage(video, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);*/
+            ctx.drawImage(video,0,0);
             // "image/webp" works in Chrome.
             // Other browsers will fall back to image/png.
             document.querySelector('img').src = canvas.toDataURL('image/webp');
