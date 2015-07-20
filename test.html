@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
     <title>index</title>
 
-    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="resources/css/quaggaJS/styles.css" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="resources/css/quaggaJS/styles.css"/>
 
 </head>
 <body>
@@ -21,64 +21,42 @@
 -->
 
 <h2>Device</h2>
-<device type="media" onchange="update(this.data)"></device>
+<device type="media"></device>
 <video autoplay></video>
 <script>
-    function update(stream) {
-        document.querySelector('video').src = stream.url;
-    }
+    var video = document.querySelector('video');
 
-    <!-- Add device element -->
-    function hasGetUserMedia() {
-        return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia || navigator.msGetUserMedia);
-    }
+    <!-- Feature 'getUserMedia' detection -->
+    navigator.getUserMedia =    navigator.getUserMedia ||
+                                navigator.webkitGetUserMedia ||
+                                navigator.mozGetUserMedia ||
+                                navigator.msGetUserMedia;
 
-    navigator.getUserMedia  = navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia;
-
-
-    <!-- Feature detection -->
-    if (hasGetUserMedia()) {
-        alert('getUserMedia() is SUPPORTED in your browser!');
-        // Good to go!
-    } else {
-        alert('getUserMedia() is NOT SUPPORTED in your browser!');
-    }
 
     <!-- Gaining access to an input device -->
-    var errorCallback = function(e) {
+    var errorCallback = function (e) {
         alert('Access Reeeejected!');
         console.log('Reeeejected!', e);
     };
 
     // Not showing vendor prefixes.
-    navigator.getUserMedia({video: true, audio: false}, function(localMediaStream) {
+    navigator.getUserMedia({video: true, audio: false}, function (localMediaStream) {
         var video = document.querySelector('video');
-        alert('1!');
         video.src = window.URL.createObjectURL(localMediaStream);
-        alert('2!');
 
         // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
         // See crbug.com/110938.
-        video.onloadedmetadata = function(e) {
+        video.onloadedmetadata = function (e) {
             alert('Ready to go. Do some stuff!');
         };
     }, errorCallback);
 
-    var video = document.querySelector('video');
-
     if (navigator.getUserMedia) {
-        navigator.getUserMedia({audio: false, video: true}, function(stream) {
-            alert('3!');
+        navigator.getUserMedia({audio: false, video: true}, function (localMediaStream) {
             video.src = window.URL.createObjectURL(stream);
-            alert('4!');
         }, errorCallback);
     } else {
-        alert('Fallback!');
-//        video.src = 'somevideo.webm'; // fallback.
+        alert('getUserMedia() is NOT SUPPORTED in your browser!');
     }
 
 
