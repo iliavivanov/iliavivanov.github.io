@@ -32,8 +32,11 @@
 -->
 
 <h2>VIDEO AUTOPLAY</h2>
-<video autoplay></video>
+<video muted autoplay></video>
 <script>
+
+    <!-- Эта директива не поддерживается IE9- -->
+    "use strict";
 
     navigator.getUserMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
