@@ -20,15 +20,11 @@
 <input type="file" accept="video/*;capture=camcorder">
 -->
 
-<h2>Device</h2>
-<device type="media" onchange="update(this.data)"></device>
+<h2>VIDEO AUTOPLAY</h2>
 <video autoplay></video>
 <script>
     var video = document.querySelector('video');
 
-    function update(stream) {
-        video.src = stream.url;
-    }
 
     var errorCallback = function(e) {
         console.log('Reeeejected!', e);
