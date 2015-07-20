@@ -81,12 +81,13 @@
 
     function onSourcesAcquired(sources) {
         var videoSourceId;
-        for (var i = 0; i != sourceInfos.length; ++i) {
-            var sourceInfo = sourceInfos[i];
-            if (sourceInfo.kind == "video" && sourceInfo.facing == "environment") {
-                videoSourceId = sourceInfo.id;
+        for (var i = 0; i != sources.length; ++i) {
+            var source = sources[i];
+            if (source.kind == "video" && source.facing == "environment") {
+                videoSourceId = source.id;
             }
         }
+        alert(videoSourceId);
         constraints.video = {
             optional: [{
                 sourceId: videoSourceId
