@@ -123,8 +123,8 @@
             // Other browsers will fall back to image/png.
             document.querySelector('img').src = canvas.toDataURL('image/webp');
 
+            alert(canvas.getImageData.width);
 
-            alert("ctx.getImageData().getWidth() = " + ctx.getImageData.getWidth() + " / ctx.getImageData.getHeight() = " + ctx.getImageData.getHeight());
 
         }
     }
