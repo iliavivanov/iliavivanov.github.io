@@ -283,11 +283,11 @@
         ctx.putImageData(imageData, 0, 0);
     }
 
-    function histogram(data) {
+    function histogram(imageData) {
         var tempData = new Uint8Array(data.length);
 
-        var width = 640;
-        var height = 10;
+        var width = imageData.width;
+        var height = imageData.height;
         var pixel;
         var histogram = new Uint8Array(width);
 
@@ -301,7 +301,6 @@
             }
         }
     }
-
 
     function makeScreenShot() {
         if (localMediaStream) {
@@ -322,7 +321,7 @@
             greyscale(imageData);
             binarize(imageData);
 
-            var histogram = histogram(imageData.data);
+//            var histogram = histogram(imageData.data);
 
             show(imageData);
 
