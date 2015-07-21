@@ -41,13 +41,15 @@
 </head>
 <body>
 <h2>VIDEO AUTOPLAY</h2>
+
 <div id="interactive" class="viewport">
     <video id="v" muted autoplay>
         <div id="html5_not_supported">Your user agent does not support the HTML5 Video element.</div>
     </video>
-    <div id="overlay_text">This is HTML overlay on top of the video! </div>
+    <!--
+    <div id="overlay_text">This is HTML overlay on top of the video!</div>
+    -->
 </div>
-
 
 
 <img src="">
@@ -101,7 +103,12 @@
 
     var constraints = {
         audio: false,
-        video: true
+        video: {
+            mandatory: {
+                maxWidth: 640,
+                maxHeight: 360
+            }
+        }
     };
 
     function onSourcesAcquired(sourceInfos) {
