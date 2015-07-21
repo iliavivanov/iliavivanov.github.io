@@ -258,7 +258,11 @@
             var imageData = ctx.getImageData(0, 0, 640, 10);
             var imageDataArray = imageData.data;
 
-//            alert(imageDataArray.length);
+
+
+
+
+            alert(imageDataArray.length + " / " + imageDataArray.className);
 
             var binarizeImageData = binarizeImageDataArray(imageDataArray);
 
