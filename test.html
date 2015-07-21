@@ -265,9 +265,11 @@
 
             alert(imageDataArray.length + " / " + imageDataArray.BYTES_PER_ELEMENT);
 
-            var binarizeImageData = binarizeImageDataArray(imageDataArray);
+//            var binarizeImageDataArray =
+                    binarizeImageDataArray(imageDataArray);
 
-            ctx.putImageData(binarizeImageData, 0, 0);
+
+            ctx.putImageData(imageData, 0, 0);
 
 //
 //            var searchArea = ctx.getImageData(0, 0, 100, 100);
