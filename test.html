@@ -165,11 +165,11 @@
         var length = imageDataArray.length,
                 targetData = new Int32Array(length);
 
-//        alert(imageDataArray[0]);
+        alert(imageDataArray[0]);
         while (length--) {
             imageDataArray[length] = imageDataArray[length] < threshold ? 1 : 0;
         }
-//        alert(imageDataArray[0]);
+        alert(imageDataArray[0]);
 
         return imageDataArray;
     }
@@ -257,10 +257,8 @@
 
             var imageData = ctx.getImageData(0, 0, 640, 10);
             // Uint8ClampedArray - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray
-            var imageDataArray = imageData.data;
 
-//            var binarizeImageDataArray =
-                    binarizeImageDataArray(imageDataArray);
+            binarizeImageDataArray(imageData.data);
 
             ctx.putImageData(imageData, 0, 0);
 
