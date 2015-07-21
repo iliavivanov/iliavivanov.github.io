@@ -162,7 +162,7 @@
         alert("threshold = " + threshold + " / " + imageDataArray[0]);
         while (length--) {
 
-            imageDataArray[length] = imageDataArray[length] < threshold ? 1 : 0;
+            imageDataArray[length] = imageDataArray[length] < threshold ? 255 : 0;
 
         }
         alert(imageDataArray[0]);
