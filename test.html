@@ -156,14 +156,16 @@
 
 //        alert("threshold = " + threshold);
 
+
+
         var length = imageDataArray.length,
                 targetData = new Int32Array(length);
 
         while (length--) {
-            targetData[length] = imageDataArray[length] < threshold ? 1 : 0;
+            imageDataArray[length] = imageDataArray[length] < threshold ? 1 : 0;
         }
 
-        return targetData;
+        return imageDataArray;
     }
 
     function computeOtsuThreshold(imageDataArray) {
