@@ -152,6 +152,18 @@
         }
     }
 
+    function grayscale(imageData) {
+        var data = imageData.data;
+
+        for (var i = 0; i < data.length; i = i + 4) {
+            var grayscale = data[i] * .3 + data[i + 1] * .59 + data[i + 2] * .11;
+            data[i + 0] = grayscale;        // red
+            data[i + 1] = grayscale;        // green
+            data[i + 2] = grayscale;        // blue
+            // pixels[i+3]                    // alpha
+        }
+    }
+
     /**
      * Creates a binary image of the current image
      */
@@ -276,9 +288,9 @@
             var imageData = ctx.getImageData(0, 0, 640, 10);
             // Uint8ClampedArray - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray
 
-            binarizeImageData(imageData);
+            grayscale(imageData);
+//            binarizeImageData(imageData);
             show(imageData);
-
 
 
 //
