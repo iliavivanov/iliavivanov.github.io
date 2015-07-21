@@ -161,14 +161,8 @@
         var threshold = computeOtsuThreshold(data);
         var length = data.length;
 
-        for (var i = 0; i < length; i + 4) {
-            // Grayscaling
-            var grayscale = data[i] * .3 + data[i + 1] * .59 + data[i + 2] * .11;
-            grayscale = grayscale < threshold ? 0 : 1;
-            data[i + 0] = grayscale;        // red
-            data[i + 1] = grayscale;        // green
-            data[i + 2] = grayscale;        // blue
-            data[i + 3] = data[i + 3] < threshold ? 0 : 1;        // alpha
+        while (length--) {
+            data[length] = data[length] < threshold ? 0 : 1;
         }
     }
 
@@ -284,6 +278,7 @@
 
             binarizeImageData(imageData);
             show(imageData);
+
 
 
 //
