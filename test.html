@@ -161,6 +161,7 @@
         var threshold = computeOtsuThreshold(data);
         var length = data.length;
 
+        alert("length = " + length);
 //        alert("threshold = " + threshold + " / " + data[0]);
         while (length--) {
             data[length] = data[length] < threshold ? 1 : 0;
