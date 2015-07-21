@@ -45,7 +45,7 @@
 <img src="resources/assets/barcode.png" style="border: 1px solid #ff0000;"/>
 
 <h4>CANVAS</h4>
-<canvas style="display: none; border: 1px solid #ff0000;"></canvas>
+<canvas style="display: block; border: 1px solid #ff0000;"></canvas>
 
 <h4>VIDEO AUTOPLAY!!!!!!!!!!!!!!!!!!!!!!!</h4>
 
@@ -363,9 +363,9 @@
         var imageData = ctx.getImageData(0, 0, 147, 10);
         greyscaling(imageData);
         binarizing(imageData);
-
         var histogramArray = histogram(imageData);
         showing(imageData);
+
 
     };
 
