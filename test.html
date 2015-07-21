@@ -45,7 +45,7 @@
 <img src="" style="border: 1px solid #ff0000;"/>
 
 <h4>CANVAS</h4>
-<canvas style="display: block; border: 1px solid #ff0000;"></canvas>
+<canvas style="display: none; border: 1px solid #ff0000;"></canvas>
 
 <h4>VIDEO AUTOPLAY!!!!!!!!!!!!!!!!!!!!!!!</h4>
 
@@ -264,11 +264,16 @@
 
     function makeScreenShot() {
         if (localMediaStream) {
+            var offsetX = 0;
+            var offsetY = 70;
+            var width = 640;
+            var height = 10;
+
             // Clip video image
             // https://developer.mozilla.org/ru/docs/Web/API/CanvasRenderingContext2D/drawImage
             ctx.drawImage(video,
-                    0, 70, 640, 10,
-                    0, 0, 640, 10);
+                    offsetX, offsetY, width, height,
+                    offsetX, 0, width, height);
 
             var imageData = ctx.getImageData(0, 0, 640, 10);
             // Uint8ClampedArray - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray
