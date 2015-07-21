@@ -139,7 +139,8 @@
 
     function getUserMedia() {
         if (navigator.getUserMedia) {
-            navigator.getUserMedia(constraints, successCallback, errorCallback);
+            // Camera disabled (commented)
+            // navigator.getUserMedia(constraints, successCallback, errorCallback);
         } else {
             alert('getUserMedia() IS NOT SUPPORTED in your browser');
         }
@@ -256,9 +257,6 @@
         var data = imageData.data;
 
         var scale = 255;
-//        var width = 640;
-//        var height = 10;
-//        var pixel;
 
         var i = 0;
         var current = 0;
@@ -278,8 +276,6 @@
         var width = imageData.width;
         var height = imageData.height;
 
-        alert("width = " + width + " / " + "height = " + height);
-
         // TODO проверить на переполнение - когда height > 256
         var histogramArray = new Uint8Array(width);
 
@@ -296,6 +292,15 @@
     }
 
     function makeScreenShot() {
+
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0);
+        };
+        img.src = 'resources/assets/barcode.png';
+
+
+        // TODO
+        localMediaStream = null;
         if (localMediaStream) {
             var offsetX = 0;
             var offsetY = 80;
@@ -315,9 +320,10 @@
             binarizing(imageData);
 
             var histogramArray = histogram(imageData);
-//            var
+            var
 
-            showing(imageData);
+                    showing
+            (imageData);
 
             /*
              Ну вобще конечно мой алгоритм не очень совершенен и медленно работает.
@@ -340,6 +346,13 @@
             img.src = canvas.toDataURL('image/webp');
 
 
+            /*
+             https://github.com/plstand/dumb3of9/blob/master/test-suite/index.html
+             https://github.com/plstand/dumb3of9/blob/master/test-suite/test-suite.js
+             https://github.com/plstand/dumb3of9/blob/master/decoder.js
+
+             */
+
         }
     }
 
@@ -348,7 +361,7 @@
 
     var i;
     video.addEventListener('play', function () {
-        i = window.setInterval(makeScreenShot, 1000);
+//        i = window.setInterval(makeScreenShot, 1000);
     }, false);
 
     video.addEventListener('pause', function () {
