@@ -157,15 +157,19 @@
      */
     function binarizeImageData(imageData) {
         var data = imageData.data;
-        
+
         var threshold = computeOtsuThreshold(data);
         var length = data.length;
 
-//        alert("threshold = " + threshold + " / " + data[0]);
-        while (length--) {
-            data[length] = data[length] < threshold ? 0 : 1;
+        for (var i = 0; i < length; i + 4) {
+            // Grayscaling
+            var grayscale = data[i] * .3 + data[i + 1] * .59 + data[i + 2] * .11;
+            grayscale = grayscale < threshold ? 0 : 1;
+            data[i + 0] = grayscale;        // red
+            data[i + 1] = grayscale;        // green
+            data[i + 2] = grayscale;        // blue
+            data[i + 3] = data[i + 3] < threshold ? 0 : 1;        // alpha
         }
-//        alert(data[0]);
     }
 
     function computeOtsuThreshold(imageDataArray) {
@@ -242,7 +246,7 @@
 
     function show(imageData) {
         var data = imageData.data;
-        
+
         var scale = 255;
         var width = 640;
         var height = 10;
@@ -280,7 +284,6 @@
 
             binarizeImageData(imageData);
             show(imageData);
-
 
 
 //
