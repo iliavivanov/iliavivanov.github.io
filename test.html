@@ -99,12 +99,15 @@
         }
     }
 
+    // Camera disabled (commented)
+    /*
     if (typeof MediaStreamTrack === 'undefined') {
         alert('This browser does not support MediaStreamTrack!\n\nTry Chrome Canary!');
         getUserMedia();
     } else {
         MediaStreamTrack.getSources(onSourcesAcquired);
     }
+    */
 
     var constraints = {
         audio: false,
@@ -139,8 +142,7 @@
 
     function getUserMedia() {
         if (navigator.getUserMedia) {
-            // Camera disabled (commented)
-            // navigator.getUserMedia(constraints, successCallback, errorCallback);
+            navigator.getUserMedia(constraints, successCallback, errorCallback);
         } else {
             alert('getUserMedia() IS NOT SUPPORTED in your browser');
         }
