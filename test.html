@@ -101,13 +101,13 @@
 
     // Camera disabled (commented)
     /*
-    if (typeof MediaStreamTrack === 'undefined') {
-        alert('This browser does not support MediaStreamTrack!\n\nTry Chrome Canary!');
-        getUserMedia();
-    } else {
-        MediaStreamTrack.getSources(onSourcesAcquired);
-    }
-    */
+     if (typeof MediaStreamTrack === 'undefined') {
+     alert('This browser does not support MediaStreamTrack!\n\nTry Chrome Canary!');
+     getUserMedia();
+     } else {
+     MediaStreamTrack.getSources(onSourcesAcquired);
+     }
+     */
 
     var constraints = {
         audio: false,
@@ -295,14 +295,17 @@
 
     function makeScreenShot() {
 
-        img.onload = function () {
-            ctx.drawImage(img, 0, 0);
-        };
-        img.src = '/resources/assets/barcode.png';
+        var imageData = ctx.getImageData(0, 0, 147, 10);
+        greyscaling(imageData);
+        binarizing(imageData);
+
+        var histogramArray = histogram(imageData);
+        showing(imageData);
 
 
         // TODO
-        localMediaStream = null;
+        return;
+
         if (localMediaStream) {
             var offsetX = 0;
             var offsetY = 80;
@@ -322,10 +325,7 @@
             binarizing(imageData);
 
             var histogramArray = histogram(imageData);
-            var
-
-                    showing
-            (imageData);
+            showing(imageData);
 
             /*
              Ну вобще конечно мой алгоритм не очень совершенен и медленно работает.
