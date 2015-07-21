@@ -161,9 +161,11 @@
         var length = imageDataArray.length,
                 targetData = new Int32Array(length);
 
+        alert(imageDataArray[0]);
         while (length--) {
             imageDataArray[length] = imageDataArray[length] < threshold ? 1 : 0;
         }
+        alert(imageDataArray[0]);
 
         return imageDataArray;
     }
@@ -263,7 +265,7 @@
 //
 //
 //
-//            alert();
+//
 
 
             // "image/webp" works in Chrome.
