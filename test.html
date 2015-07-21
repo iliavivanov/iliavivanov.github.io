@@ -163,6 +163,8 @@
             tempData[i + 2] = grayscale;        // blue
             tempData[i + 3] = data[i + 3];      // alpha
         }
+
+        data.set(tempData);
         return tempData;
     }
 
@@ -179,6 +181,7 @@
         while (length--) {
             tempData[length] = data[length] < threshold ? 0 : 1;
         }
+        data.set(tempData);
         return tempData;
     }
 
@@ -324,8 +327,8 @@
             var imageData = ctx.getImageData(0, 0, 640, 10);
             // Uint8ClampedArray - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray
 
-            var greyscaled = greyscale(imageData);
-            var binarized = binarize(greyscaled);
+            var greyscaledArray = greyscale(imageData);
+            var binarizedArray = binarize(greyscaledArray);
 //
 //            var histogram = histogram(binarized);
 
