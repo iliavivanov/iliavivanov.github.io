@@ -294,18 +294,6 @@
     }
 
     function makeScreenShot() {
-
-        var imageData = ctx.getImageData(0, 0, 147, 10);
-        greyscaling(imageData);
-        binarizing(imageData);
-
-        var histogramArray = histogram(imageData);
-        showing(imageData);
-
-
-        // TODO
-        return;
-
         if (localMediaStream) {
             var offsetX = 0;
             var offsetY = 80;
@@ -358,9 +346,6 @@
         }
     }
 
-
-    //    video.addEventListener('click', makeScreenShot, false);
-
     var i;
     video.addEventListener('play', function () {
 //        i = window.setInterval(makeScreenShot, 1000);
@@ -374,6 +359,21 @@
         clearInterval(i);
     }, false);
 
+    var BCReader = function () {
+        var imageData = ctx.getImageData(0, 0, 147, 10);
+        greyscaling(imageData);
+        binarizing(imageData);
+
+        var histogramArray = histogram(imageData);
+        showing(imageData);
+
+
+        // TODO
+        return;
+
+    }
+
+    new BCReader();
 
 </script>
 
