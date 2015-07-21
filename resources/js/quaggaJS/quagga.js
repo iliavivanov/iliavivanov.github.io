@@ -4456,6 +4456,8 @@
             while (length--) {
                 targetData[length] = imageData[length] < threshold ? 1 : 0;
             }
+
+            alert(imageData.length);
         };
 
         CVUtils.computeHistogram = function(imageWrapper, bitsPerPixel) {
