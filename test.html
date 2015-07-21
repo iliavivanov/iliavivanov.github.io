@@ -162,6 +162,9 @@
             data[i + 2] = grayscale;        // blue
             // pixels[i+3]                    // alpha
         }
+
+        ctx.putImageData(imageData, 0, 0);
+
     }
 
     /**
@@ -290,7 +293,7 @@
 
             grayscale(imageData);
 //            binarizeImageData(imageData);
-            show(imageData);
+//            show(imageData);
 
 
 //
