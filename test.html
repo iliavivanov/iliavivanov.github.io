@@ -154,14 +154,13 @@
 
         var threshold = computeOtsuThreshold(imageDataArray);
 
-        alert("threshold = " + threshold);
+//        alert("threshold = " + threshold);
 
-        var imageData = imageDataArray,
-                length = imageData.length,
+        var length = imageDataArray.length,
                 targetData = new Int32Array(length);
 
         while (length--) {
-            targetData[length] = imageData[length] < threshold ? 1 : 0;
+            targetData[length] = imageDataArray[length] < threshold ? 1 : 0;
         }
 
         return targetData;
@@ -192,7 +191,7 @@
             return sum;
         }
 
-        function computeHistogram (imageDataArray) {
+        function computeHistogram(imageDataArray) {
             var imageData = imageDataArray,
                     length = imageData.length,
                     bitShift = 8 - bitsPerPixel,
@@ -205,9 +204,9 @@
             return hist;
         }
 
-        function maxIndex (arr) {
+        function maxIndex(arr) {
             var i, max = 0;
-            for ( i = 0; i < arr.length; i++) {
+            for (i = 0; i < arr.length; i++) {
                 if (arr[i] > arr[max]) {
                     max = i;
                 }
@@ -251,11 +250,11 @@
             var imageData = ctx.getImageData(0, 0, 640, 1);
             var imageDataArray = imageData.data;
 
-            alert(imageDataArray.length);
+//            alert(imageDataArray.length);
 
-            var binarizeImageData =  binarizeImageDataArray(imageDataArray);
+            var binarizeImageData = binarizeImageDataArray(imageDataArray);
 
-            ctx.putImageData(binarizeImageData, 0 , 0);
+            ctx.putImageData(binarizeImageData, 0, 0);
 
 //
 //            var searchArea = ctx.getImageData(0, 0, 100, 100);
