@@ -152,16 +152,18 @@
         }
     }
 
-    function grayscale(imageData) {
+    function greyscale(imageData) {
         var data = imageData.data;
+        var tempData = new Uint8Array(data.length);
 
         for (var i = 0; i < data.length; i = i + 4) {
             var grayscale = data[i] * .3 + data[i + 1] * .59 + data[i + 2] * .11;
-            data[i + 0] = grayscale;        // red
-            data[i + 1] = grayscale;        // green
-            data[i + 2] = grayscale;        // blue
-            // pixels[i+3]                    // alpha
+            tempData[i + 0] = grayscale;        // red
+            tempData[i + 1] = grayscale;        // green
+            tempData[i + 2] = grayscale;        // blue
+            tempData[i + 3] = data[i + 3];      // alpha
         }
+        return tempData;
     }
 
     /**
@@ -169,13 +171,15 @@
      */
     function binarize(imageData) {
         var data = imageData.data;
+        var tempData = new Uint8Array(data.length);
 
         var threshold = computeOtsuThreshold(data);
         var length = data.length;
 
         while (length--) {
-            data[length] = data[length] < threshold ? 0 : 1;
+            tempData[length] = data[length] < threshold ? 0 : 1;
         }
+        return tempData;
     }
 
     function computeOtsuThreshold(imageDataArray) {
@@ -254,23 +258,55 @@
         var data = imageData.data;
 
         var scale = 255;
+//        var width = 640;
+//        var height = 10;
+//        var pixel;
+
+        var i = 0;
+        var current = 0;
+        while (i <  data.length) {
+            current = data[i] * scale;
+            data[i + 0] = current;
+            data[i + 1] = current;
+            data[i + 2] = current;
+            data[i + 3] = 255;
+            i = i + 4;
+        }
+
+//        var current = 0;
+//        for (var y = 0; y < height; y++) {
+//            for (var x = 0; x < width; x++) {
+//                pixel = y * width + x; // MAX - 6400
+//                current = data[pixel * 4] * scale;
+//                data[pixel * 4 + 0] = current;
+//                data[pixel * 4 + 1] = current;
+//                data[pixel * 4 + 2] = current;
+//                data[pixel * 4 + 3] = 255;
+//            }
+//        }
+        ctx.putImageData(imageData, 0, 0);
+    }
+
+    function histogram(imageData) {
+        var data = imageData.data;
+        var tempData = new Uint8Array(data.length);
+
         var width = 640;
         var height = 10;
         var pixel;
+        var histogram = new Uint8Array(width);
 
-        var current = 0;
-        for (var y = 0; y < height; y++) {
-            for (var x = 0; x < width; x++) {
-                pixel = y * width + x; // MAX - 6400
-                current = data[pixel * 4] * scale;
-                data[pixel * 4 + 0] = current;
-                data[pixel * 4 + 1] = current;
-                data[pixel * 4 + 2] = current;
-                data[pixel * 4 + 3] = 255;
+        for (var x = 0; x < width; x++) {
+            for (var y = 0; y < height; y++) {
+                pixel = y * width + x;
+
+                histogram[width]++;
+
+
             }
         }
-        ctx.putImageData(imageData, 0, 0);
     }
+
 
     function makeScreenShot() {
         if (localMediaStream) {
@@ -288,9 +324,12 @@
             var imageData = ctx.getImageData(0, 0, 640, 10);
             // Uint8ClampedArray - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray
 
-            grayscale(imageData);
-            binarize(imageData);
-            show(imageData);
+            var greyscaled = greyscale(imageData);
+            var binarized = binarize(greyscaled);
+
+            var histogram = histogram(binarized);
+
+            show(binarized);
 
             /*
              Ну вобще конечно мой алгоритм не очень совершенен и медленно работает.
