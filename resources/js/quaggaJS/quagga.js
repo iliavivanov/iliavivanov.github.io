@@ -4453,8 +4453,6 @@
             }
             var imageData = imageWrapper.data, length = imageData.length, targetData = targetWrapper.data;
 
-            alert(length);
-
             while (length--) {
                 targetData[length] = imageData[length] < threshold ? 1 : 0;
             }
