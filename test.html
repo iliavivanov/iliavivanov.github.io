@@ -162,15 +162,12 @@
             data[i + 2] = grayscale;        // blue
             // pixels[i+3]                    // alpha
         }
-
-        ctx.putImageData(imageData, 0, 0);
-
     }
 
     /**
      * Creates a binary image of the current image
      */
-    function binarizeImageData(imageData) {
+    function binarize(imageData) {
         var data = imageData.data;
 
         var threshold = computeOtsuThreshold(data);
@@ -292,8 +289,8 @@
             // Uint8ClampedArray - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray
 
             grayscale(imageData);
-//            binarizeImageData(imageData);
-//            show(imageData);
+            binarize(imageData);
+            show(imageData);
 
 
 //
