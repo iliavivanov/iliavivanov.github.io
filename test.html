@@ -176,6 +176,8 @@
         while (length--) {
             data[length] = data[length] < threshold ? 0 : 1;
         }
+        // Copy array
+        // return data.slice;
     }
 
     function computeOtsuThreshold(imageDataArray) {
@@ -260,7 +262,7 @@
 
         var i = 0;
         var current = 0;
-        while (i <  data.length) {
+        while (i < data.length) {
             current = data[i] * scale;
             data[i + 0] = current;
             data[i + 1] = current;
@@ -278,7 +280,8 @@
 
         alert("width = " + width + " / " + "height = " + height);
 
-        var histogram = new Uint8Array(width);
+        // TODO проверить на переполнение - когда height > 256
+        var histogramArray = new Uint8Array(width);
 
         var pixel = 0;
         var current = 0;
@@ -286,10 +289,10 @@
             for (var y = 0; y < height; y++) {
                 pixel = x + width * y;          // MAX = width * height
                 current = data[pixel * 4];      // 0 or 1
-                histogram[x] = histogram[x] + current;
+                histogramArray[x] = histogramArray[x] + current;
             }
         }
-        return histogram;
+        return histogramArray;
     }
 
     function makeScreenShot() {
@@ -311,9 +314,11 @@
             greyscaling(imageData);
             binarizing(imageData);
 
-            var histogram = histogram(imageData);
+            var histogramArray = histogram(imageData);
+            var
 
-            showing(imageData);
+                    showing
+            (imageData);
 
             /*
              Ну вобще конечно мой алгоритм не очень совершенен и медленно работает.
