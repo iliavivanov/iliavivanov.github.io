@@ -154,18 +154,14 @@
 
     function greyscale(imageData) {
         var data = imageData.data;
-        var tempData = new Uint8Array(data.length);
 
         for (var i = 0; i < data.length; i = i + 4) {
             var grayscale = data[i] * .3 + data[i + 1] * .59 + data[i + 2] * .11;
-            tempData[i + 0] = grayscale;        // red
-            tempData[i + 1] = grayscale;        // green
-            tempData[i + 2] = grayscale;        // blue
-            tempData[i + 3] = data[i + 3];      // alpha
+            data[i + 0] = grayscale;        // red
+            data[i + 1] = grayscale;        // green
+            data[i + 2] = grayscale;        // blue
+            // data[i + 3] = data[i + 3];   // alpha
         }
-
-        data.set(tempData);
-        return tempData;
     }
 
     /**
@@ -173,16 +169,13 @@
      */
     function binarize(imageData) {
         var data = imageData.data;
-        var tempData = new Uint8Array(data.length);
-
-        var threshold = computeOtsuThreshold(data);
         var length = data.length;
 
+        var threshold = computeOtsuThreshold(data);
+
         while (length--) {
-            tempData[length] = data[length] < threshold ? 0 : 1;
+            data[length] = data[length] < threshold ? 0 : 1;
         }
-        data.set(tempData);
-        return tempData;
     }
 
     function computeOtsuThreshold(imageDataArray) {
@@ -290,8 +283,7 @@
         ctx.putImageData(imageData, 0, 0);
     }
 
-    function histogram(imageData) {
-        var data = imageData.data;
+    function histogram(data) {
         var tempData = new Uint8Array(data.length);
 
         var width = 640;
@@ -327,12 +319,12 @@
             var imageData = ctx.getImageData(0, 0, 640, 10);
             // Uint8ClampedArray - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray
 
-            var greyscaledArray = greyscale(imageData);
-            var binarizedArray = binarize(greyscaledArray);
-//
-//            var histogram = histogram(binarized);
+            greyscale(imageData);
+            binarize(imageData);
 
-            show(binarized);
+            var histogram = histogram(imageData.data);
+
+            show(imageData);
 
             /*
              Ну вобще конечно мой алгоритм не очень совершенен и медленно работает.
