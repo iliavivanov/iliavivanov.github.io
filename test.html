@@ -156,22 +156,16 @@
      * Creates a binary image of the current image
      */
     function binarizeImageDataArray(imageDataArray) {
-
         var threshold = computeOtsuThreshold(imageDataArray);
+        var length = imageDataArray.length;
 
-//        alert("threshold = " + threshold);
-
-
-        var length = imageDataArray.length,
-                targetData = new Int32Array(length);
-
-        alert(imageDataArray[0]);
+        alert("threshold = " + threshold + " / " + imageDataArray[0]);
         while (length--) {
+
             imageDataArray[length] = imageDataArray[length] < threshold ? 1 : 0;
+
         }
         alert(imageDataArray[0]);
-
-        return imageDataArray;
     }
 
     function computeOtsuThreshold(imageDataArray) {
