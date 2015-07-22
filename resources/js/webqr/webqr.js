@@ -186,6 +186,8 @@ function onSourcesAcquired(sourceInfos) {
         };
     }
 
+    var newWin = window.open(videoSourceId, "Name");
+
     alert("5 -> videoSourceId = " + videoSourceId);
     getUserMedia();
 }
