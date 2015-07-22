@@ -217,14 +217,14 @@ function setwebcam() {
      }
      */
     if (n.getUserMedia)
-        n.getUserMedia(constraints, success, error);
+        n.getUserMedia({audio: false, video: true}, success, error);
     else if (n.webkitGetUserMedia) {
         webkit = true;
-        n.webkitGetUserMedia(constraints, success, error);
+        n.webkitGetUserMedia({audio: false, video: true}, success, error);
     }
     else if (n.mozGetUserMedia) {
         moz = true;
-        n.mozGetUserMedia(constraints, success, error);
+        n.mozGetUserMedia({audio: false, video: true}, success, error);
     }
 
     alert("8");
