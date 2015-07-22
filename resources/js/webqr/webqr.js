@@ -183,7 +183,7 @@ function onSourcesAcquired(sourceInfos) {
 function getUserMedia() {
     if (navigator.getUserMedia) {
 
-        navigator.webkitGetUserMedia(constraints, success, error);
+        navigator.getUserMedia(constraints, success, error);
     } else {
         console.log('getUserMedia() IS NOT SUPPORTED in your browser!');
     }
@@ -206,17 +206,15 @@ function setwebcam() {
         MediaStreamTrack.getSources(onSourcesAcquired);
     }
 
-    /*
-     if (n.getUserMedia) {
-     n.getUserMedia({video: true, audio: false}, success, error);
-     } else if (n.webkitGetUserMedia) {
-     webkit = true;
-     n.webkitGetUserMedia({video: true, audio: false}, success, error);
-     } else if (n.mozGetUserMedia) {
-     moz = true;
-     n.mozGetUserMedia({video: true, audio: false}, success, error);
-     }
-     */
+    if (n.getUserMedia) {
+        n.getUserMedia({video: true, audio: false}, success, error);
+    } else if (n.webkitGetUserMedia) {
+        webkit = true;
+        n.webkitGetUserMedia({video: true, audio: false}, success, error);
+    } else if (n.mozGetUserMedia) {
+        moz = true;
+        n.mozGetUserMedia({video: true, audio: false}, success, error);
+    }
 
 //document.getElementById("qrimg").src="qrimg2.png";
 //document.getElementById("webcamimg").src="webcam.png";
