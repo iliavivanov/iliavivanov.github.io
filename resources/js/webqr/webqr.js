@@ -141,7 +141,7 @@ function load() {
     }
 }
 
-
+/*
 var constraints = {
     audio: false,
     video: {
@@ -188,7 +188,7 @@ function getUserMedia() {
         console.log('getUserMedia() IS NOT SUPPORTED in your browser!');
     }
 }
-
+*/
 function setwebcam() {
     document.getElementById("result").innerHTML = "- scanning -";
     if (stype == 1) {
