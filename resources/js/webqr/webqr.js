@@ -182,7 +182,8 @@ function onSourcesAcquired(sourceInfos) {
 
 function getUserMedia() {
     if (navigator.getUserMedia) {
-        navigator.getUserMedia(constraints, success, error);
+
+        navigator.webkitGetUserMedia(constraints, success, error);
     } else {
         console.log('getUserMedia() IS NOT SUPPORTED in your browser!');
     }
