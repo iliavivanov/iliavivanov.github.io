@@ -218,7 +218,7 @@ function setwebcam()
     //alert("1");
 
 
-    getUserMedia();
+    //getUserMedia();
 /*
     if (typeof MediaStreamTrack === 'undefined') {
         alert('This browser does not support MediaStreamTrack!\n\nTry Chrome Canary!');
@@ -229,20 +229,20 @@ function setwebcam()
         alert("3");
     }
 */
-    //if(n.getUserMedia)
-    //    n.getUserMedia({video: true, audio: false}, success, error);
-    //else
-    //if(n.webkitGetUserMedia)
-    //{
-    //    webkit=true;
-    //    n.webkitGetUserMedia({video:true, audio: false}, success, error);
-    //}
-    //else
-    //if(n.mozGetUserMedia)
-    //{
-    //    moz=true;
-    //    n.mozGetUserMedia({video: true, audio: false}, success, error);
-    //}
+    if(n.getUserMedia)
+        n.getUserMedia(constraints, success, error);
+    else
+    if(n.webkitGetUserMedia)
+    {
+        webkit=true;
+        n.webkitGetUserMedia(constraints, success, error);
+    }
+    else
+    if(n.mozGetUserMedia)
+    {
+        moz=true;
+        n.mozGetUserMedia(constraints, success, error);
+    }
 
     alert("8");
 
