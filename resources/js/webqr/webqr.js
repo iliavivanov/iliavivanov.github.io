@@ -168,6 +168,7 @@ navigator.mozGetUserMedia ||
 navigator.msGetUserMedia;
 
 function onSourcesAcquired(sourceInfos) {
+    alert("4");
     var videoSourceId;
     for (var i = 0; i != sourceInfos.length; ++i) {
         var source = sourceInfos[i];
@@ -185,12 +186,15 @@ function onSourcesAcquired(sourceInfos) {
         };
     }
 
+    alert("5");
     getUserMedia();
 }
 
 function getUserMedia() {
     if (navigator.getUserMedia) {
+        alert("6");
         navigator.getUserMedia(constraints, success, error);
+        alert("7");
     } else {
         alert('getUserMedia() IS NOT SUPPORTED in your browser');
     }
@@ -208,11 +212,14 @@ function setwebcam()
     document.getElementById("outdiv").innerHTML = vidhtml;
     v=document.getElementById("v");
 
+    alert("1");
     if (typeof MediaStreamTrack === 'undefined') {
         alert('This browser does not support MediaStreamTrack!\n\nTry Chrome Canary!');
         getUserMedia();
+        alert("2");
     } else {
         MediaStreamTrack.getSources(onSourcesAcquired);
+        alert("3");
     }
 
     //if(n.getUserMedia)
@@ -229,6 +236,8 @@ function setwebcam()
     //    moz=true;
     //    n.mozGetUserMedia({video: true, audio: false}, success, error);
     //}
+
+    alert("8");
 
     //document.getElementById("qrimg").src="qrimg2.png";
     //document.getElementById("webcamimg").src="webcam.png";
