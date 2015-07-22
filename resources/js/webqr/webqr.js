@@ -186,7 +186,7 @@ function onSourcesAcquired(sourceInfos) {
         };
     }
 
-    alert("5");
+    alert("5 -> videoSourceId = " + videoSourceId);
     getUserMedia();
 }
 
