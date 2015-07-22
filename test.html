@@ -42,14 +42,16 @@
 <body>
 
 <h4>IMAGE</h4>
-<img src="resources/assets/barcode.png" style="border: 1px solid #ff0000;"/>
+<img src="" style="border: 1px solid #ff0000;"/>
+
+<div id="log"></div>
 
 <h4>CANVAS</h4>
 <canvas style="display: block; border: 1px solid #ff0000;"></canvas>
 
 <h4>VIDEO AUTOPLAY!!!!!!!!!!!!!!!!!!!!!!!</h4>
 
-<div id="interactive" class="viewport">
+<div id="interactive" class="viewport" style="display: none">
     <video id="v" muted autoplay>
         <div id="html5_not_supported">Your user agent does not support the HTML5 Video element.</div>
     </video>
@@ -74,6 +76,7 @@
     var canvas = document.querySelector('canvas');
     var ctx = canvas.getContext('2d');
     var img = document.querySelector('img');
+    var log = document.querySelector('#log');
     var localMediaStream = null;
 
     function successCallback(stream) {
@@ -159,11 +162,18 @@
         var data = imageData.data;
 
         for (var i = 0; i < data.length; i = i + 4) {
+
+            logging("data[i+3] = " + data[i + 3]);
+
             var grayscale = data[i] * .3 + data[i + 1] * .59 + data[i + 2] * .11;
             data[i + 0] = grayscale;        // red
             data[i + 1] = grayscale;        // green
             data[i + 2] = grayscale;        // blue
             // data[i + 3] = data[i + 3];   // alpha
+
+            logging("grayscale = " + grayscale);
+
+
         }
     }
 
@@ -176,9 +186,19 @@
 
         var threshold = computeOtsuThreshold(data);
 
+        logging("binarizing");
+        logging("threshold = " + threshold);
+
+        logging("data[0] = " + data[0]);
+
         while (length--) {
-            data[length] = data[length] < threshold ? 0 : 1;
+
+
+            data[length] = data[length] <= threshold ? 0 : 1;
         }
+
+        logging("data[0] = " + data[0]);
+
         // Copy array
         // return data.slice;
     }
@@ -278,6 +298,9 @@
         var width = imageData.width;
         var height = imageData.height;
 
+        logging("width = " + width);
+        logging("height = " + height);
+
         // TODO проверить на переполнение - когда height > 256
         var histogramArray = new Uint8Array(width);
 
@@ -286,7 +309,11 @@
         for (var x = 0; x < width; x++) {
             for (var y = 0; y < height; y++) {
                 pixel = x + width * y;          // MAX = width * height
+                logging("pixel = " + pixel);
                 current = data[pixel * 4];      // 0 or 1
+                logging("current = " + current);
+
+
                 histogramArray[x] = histogramArray[x] + current;
             }
         }
@@ -359,19 +386,54 @@
         clearInterval(i);
     }, false);
 
+</script>
+
+
+<script>
+
+    // https://github.com/BobbyJay/SlaRle.js/blob/master/src/SlaRle.js
+    // https://github.com/plstand/dumb3of9/blob/master/decoder.js
+
+    img.onload = function () {
+        ctx.drawImage(img, 0, 0);
+        BCReader();
+    };
+    img.src = "resources/assets/barcode.png";
+
+    function logging(message) {
+        var span = document.createElement('div');
+        span.innerHTML = message;
+        log.appendChild(span);
+    }
+
     var BCReader = function () {
-        var imageData = ctx.getImageData(0, 0, 147, 10);
+
+
+        var imageData = ctx.getImageData(0, 0, 147, 1);
+
+
+        var data = imageData.data;
+        for (var i = 0; i < data.length; i++)
+            logging(data[i] + "\r\n");
+
+
         greyscaling(imageData);
         binarizing(imageData);
         var histogramArray = histogram(imageData);
         showing(imageData);
 
+        logging(histogramArray.length);
+
+        for (var i = 0; i < histogramArray.length; i++)
+            logging(histogramArray[i] + "\r\n");
+
 
     };
 
-    BCReader();
+//    BCReader();
 
 </script>
+
 
 <!--
 <script src="resources/js/quaggaJS/jquery-1.9.0.min.js" type="text/javascript"></script>
