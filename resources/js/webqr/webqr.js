@@ -141,6 +141,51 @@ function load() {
     }
 }
 
+
+var constraints = {
+    audio: false,
+    video: {
+        mandatory: {
+            maxWidth: 640,
+            maxHeight: 480
+        }
+    }
+};
+
+navigator.getUserMedia = navigator.getUserMedia ||
+navigator.webkitGetUserMedia ||
+navigator.mozGetUserMedia ||
+navigator.msGetUserMedia;
+
+function onSourcesAcquired(sourceInfos) {
+    var videoSourceId;
+    for (var i = 0; i != sourceInfos.length; ++i) {
+        var source = sourceInfos[i];
+        if (source.kind == "video" && source.facing == "environment") {
+            videoSourceId = source.id;
+        }
+    }
+    if (!videoSourceId) {
+        console.log('Can not find environment camera. Default camera is used!');
+    } else {
+        constraints.video = {
+            optional: [{
+                sourceId: videoSourceId
+            }]
+        };
+    }
+    getUserMedia();
+}
+
+
+function getUserMedia() {
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia(constraints, success, error);
+    } else {
+        console.log('getUserMedia() IS NOT SUPPORTED in your browser!');
+    }
+}
+
 function setwebcam() {
     document.getElementById("result").innerHTML = "- scanning -";
     if (stype == 1) {
@@ -151,30 +196,24 @@ function setwebcam() {
     document.getElementById("outdiv").innerHTML = vidhtml;
     v = document.getElementById("v");
 
-    if (n.getUserMedia) {
-        console.log("getUserMedia");
-        n.getUserMedia({
-            video: {
-                optional: [{
-                    sourceId: "291f33b383d8484951c84f38d5f743709aeff8bf3b5f1b1e9aec1273a3376ed0"
-                }]
-            }, audio: false
-        }, success, error);
+    if (typeof MediaStreamTrack === 'undefined') {
+        console.log('This browser does not support MediaStreamTrack!\n\nTry Chrome Canary!');
+        getUserMedia();
+    } else {
+        MediaStreamTrack.getSources(onSourcesAcquired);
     }
-    else if (n.webkitGetUserMedia) {
-        console.log("webkitGetUserMedia");
-        webkit = true;
-        n.webkitGetUserMedia({video: {
-            optional: [{
-                sourceId: "291f33b383d8484951c84f38d5f743709aeff8bf3b5f1b1e9aec1273a3376ed0"
-            }]
-        }, audio: false}, success, error);
-    }
-    else if (n.mozGetUserMedia) {
-        console.log("mozGetUserMedia");
-        moz = true;
-        n.mozGetUserMedia({video: true, audio: false}, success, error);
-    }
+
+    /*
+     if (n.getUserMedia) {
+     n.getUserMedia({video: true, audio: false}, success, error);
+     } else if (n.webkitGetUserMedia) {
+     webkit = true;
+     n.webkitGetUserMedia({video: true, audio: false}, success, error);
+     } else if (n.mozGetUserMedia) {
+     moz = true;
+     n.mozGetUserMedia({video: true, audio: false}, success, error);
+     }
+     */
 
 //document.getElementById("qrimg").src="qrimg2.png";
 //document.getElementById("webcamimg").src="webcam.png";
