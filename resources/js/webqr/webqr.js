@@ -155,6 +155,9 @@ function load()
 var constraints = {
     audio: false,
     video: {
+        optional: [{
+            sourceId: 291f33b383d8484951c84f38d5f743709aeff8bf3b5f1b1e9aec1273a3376ed0
+        }]
         //mandatory: {
         //    maxWidth: 640,
         //    maxHeight: 480
@@ -186,9 +189,7 @@ function onSourcesAcquired(sourceInfos) {
         };
     }
 
-    var newWin = window.open(videoSourceId, "Name");
-
-    alert("5 -> videoSourceId = " + videoSourceId);
+    alert("5");
     getUserMedia();
 }
 
@@ -214,7 +215,11 @@ function setwebcam()
     document.getElementById("outdiv").innerHTML = vidhtml;
     v=document.getElementById("v");
 
-    alert("1");
+    //alert("1");
+
+
+    getUserMedia();
+/*
     if (typeof MediaStreamTrack === 'undefined') {
         alert('This browser does not support MediaStreamTrack!\n\nTry Chrome Canary!');
         getUserMedia();
@@ -223,7 +228,7 @@ function setwebcam()
         MediaStreamTrack.getSources(onSourcesAcquired);
         alert("3");
     }
-
+*/
     //if(n.getUserMedia)
     //    n.getUserMedia({video: true, audio: false}, success, error);
     //else
