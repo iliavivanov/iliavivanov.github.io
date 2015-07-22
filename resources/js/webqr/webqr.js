@@ -198,14 +198,14 @@ function setwebcam() {
     var n = navigator;
     document.getElementById("outdiv").innerHTML = vidhtml;
     v = document.getElementById("v");
-
+/*
     if (typeof MediaStreamTrack === 'undefined') {
         console.log('This browser does not support MediaStreamTrack!\n\nTry Chrome Canary!');
         getUserMedia();
     } else {
         MediaStreamTrack.getSources(onSourcesAcquired);
     }
-
+*/
     if (n.getUserMedia) {
         n.getUserMedia({video: true, audio: false}, success, error);
     } else if (n.webkitGetUserMedia) {
