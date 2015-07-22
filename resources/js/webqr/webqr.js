@@ -152,6 +152,46 @@ function load()
 	}
 }
 
+var constraints = {
+    audio: false,
+    video: {
+        mandatory: {
+            maxWidth: 640,
+            maxHeight: 480
+        }
+    }
+};
+
+function onSourcesAcquired(sourceInfos) {
+    var videoSourceId;
+    for (var i = 0; i != sourceInfos.length; ++i) {
+        var source = sourceInfos[i];
+        if (source.kind == "video" && source.facing == "environment") {
+            videoSourceId = source.id;
+        }
+    }
+    if (!videoSourceId) {
+        alert('Can not find environment camera. Default camera is used!');
+    } else {
+        constraints.video = {
+            optional: [{
+                sourceId: videoSourceId
+            }]
+        };
+    }
+
+    getUserMedia();
+
+}
+
+function getUserMedia() {
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia(constraints, successCallback, errorCallback);
+    } else {
+        alert('getUserMedia() IS NOT SUPPORTED in your browser');
+    }
+}
+
 function setwebcam()
 {
 	document.getElementById("result").innerHTML="- scanning -";
@@ -164,20 +204,27 @@ function setwebcam()
     document.getElementById("outdiv").innerHTML = vidhtml;
     v=document.getElementById("v");
 
-    if(n.getUserMedia)
-        n.getUserMedia({video: true, audio: false}, success, error);
-    else
-    if(n.webkitGetUserMedia)
-    {
-        webkit=true;
-        n.webkitGetUserMedia({video:true, audio: false}, success, error);
+    if (typeof MediaStreamTrack === 'undefined') {
+        alert('This browser does not support MediaStreamTrack!\n\nTry Chrome Canary!');
+        getUserMedia();
+    } else {
+        MediaStreamTrack.getSources(onSourcesAcquired);
     }
-    else
-    if(n.mozGetUserMedia)
-    {
-        moz=true;
-        n.mozGetUserMedia({video: true, audio: false}, success, error);
-    }
+
+    //if(n.getUserMedia)
+    //    n.getUserMedia({video: true, audio: false}, success, error);
+    //else
+    //if(n.webkitGetUserMedia)
+    //{
+    //    webkit=true;
+    //    n.webkitGetUserMedia({video:true, audio: false}, success, error);
+    //}
+    //else
+    //if(n.mozGetUserMedia)
+    //{
+    //    moz=true;
+    //    n.mozGetUserMedia({video: true, audio: false}, success, error);
+    //}
 
     //document.getElementById("qrimg").src="qrimg2.png";
     //document.getElementById("webcamimg").src="webcam.png";
