@@ -174,6 +174,8 @@ function onSourcesAcquired(sourceInfos) {
             }]
         };
     }
+
+    console.log('videoSourceId = ' + videoSourceId);
     getUserMedia();
 }
 
