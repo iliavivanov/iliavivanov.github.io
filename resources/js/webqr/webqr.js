@@ -144,9 +144,9 @@ function load() {
 var constraints = {
     audio: false,
     video: {
-        optional: [{
-            sourceId: "291f33b383d8484951c84f38d5f743709aeff8bf3b5f1b1e9aec1273a3376ed0"
-        }]
+        //optional: [{
+        //    sourceId: "291f33b383d8484951c84f38d5f743709aeff8bf3b5f1b1e9aec1273a3376ed0"
+        //}]
         //mandatory: {
         //    maxWidth: 640,
         //    maxHeight: 480
