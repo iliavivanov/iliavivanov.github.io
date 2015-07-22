@@ -162,6 +162,11 @@ var constraints = {
     }
 };
 
+navigator.getUserMedia = navigator.getUserMedia ||
+navigator.webkitGetUserMedia ||
+navigator.mozGetUserMedia ||
+navigator.msGetUserMedia;
+
 function onSourcesAcquired(sourceInfos) {
     var videoSourceId;
     for (var i = 0; i != sourceInfos.length; ++i) {
