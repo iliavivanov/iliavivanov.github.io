@@ -186,7 +186,6 @@ function onSourcesAcquired(sourceInfos) {
     }
 
     getUserMedia();
-
 }
 
 function getUserMedia() {
@@ -237,7 +236,7 @@ function setwebcam()
     document.getElementById("webcamimg").style.opacity=1.0;
 
     stype=1;
-    setTimeout(captureToCanvas, 500);
+    setTimeout(captureToCanvas, 1500);
 }
 function setimg()
 {
