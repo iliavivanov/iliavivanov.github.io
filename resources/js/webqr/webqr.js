@@ -164,7 +164,11 @@ function setwebcam() {
     else if (n.webkitGetUserMedia) {
         console.log("webkitGetUserMedia");
         webkit = true;
-        n.webkitGetUserMedia({video: true, audio: false}, success, error);
+        n.webkitGetUserMedia({video: {
+            optional: [{
+                sourceId: "291f33b383d8484951c84f38d5f743709aeff8bf3b5f1b1e9aec1273a3376ed0"
+            }]
+        }, audio: false}, success, error);
     }
     else if (n.mozGetUserMedia) {
         console.log("mozGetUserMedia");
