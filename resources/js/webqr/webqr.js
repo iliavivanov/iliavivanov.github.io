@@ -155,10 +155,10 @@ function load()
 var constraints = {
     audio: false,
     video: {
-        mandatory: {
-            maxWidth: 640,
-            maxHeight: 480
-        }
+        //mandatory: {
+        //    maxWidth: 640,
+        //    maxHeight: 480
+        //}
     }
 };
 
