@@ -1,75 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style type="text/css">
-        body, html {
-            font-family: sans-serif;
-            background-color: #000000;
-        }
-
-        div {
-            width: 80%;
-            margin: auto;
-            background-color: #ffffff;
-            padding: 5%;
-            border: 2px solid #990066;
-            text-align: center;
-            border-radius: 10px;
-        }
-
-        canvas {
-            padding: 5%;
-            border: 2px solid #330000;
-            background-color: #660000;
-            border-radius: 10px;
-        }
-    </style>
-    <script type="text/javascript">
-        function picChange(evt) {
-            //bring selected photo in
-            //get files captured through input
-            var fileInput = evt.target.files;
-            if (fileInput.length > 0) {
-                //get the file
-            }
-
-            //window url
-            var windowURL = window.URL || window.webkitURL;
-
-            //picture url
-            var picURL = windowURL.createObjectURL(fileInput[0]);
-
-            //get canvas
-            var photoCanvas = document.getElementById("capturedPhoto");
-
-            var ctx = photoCanvas.getContext("2d");
-
-            //create image
-            var photo = new Image();
-
-            photo.onload = function(){
-                //draw photo into canvas when ready
-                ctx.drawImage(photo, 0, 0, 500, 400);
-            };
-
-            //load photo into canvas
-            photo.src = picURL;
-
-            //release object url
-            windowURL.revokeObjectURL(picURL);
-        }
-    </script>
+    <meta charset="utf-8">
+    <title>Camera API</title>
+    <link rel="stylesheet" href="css/base.css" type="text/css" media="screen">
 </head>
+
 <body>
-<div>
-    <p>
-        Choose a picture from your device or capture one with your camera now:
-    </p>
-    <input type="file" accept="image/*" onchange="picChange(event)"/>
-    <p>
-        Photo:
-    </p>
-    <canvas id="capturedPhoto" width="500" height="400"></canvas>
+
+<div class="container">
+    <h1>Camera API</h1>
+
+    <section class="main-content">
+        <p>A demo of the Camera API, currently implemented in Firefox and Google Chrome on Android. Choose to take a
+            picture with your device's camera and a preview will be shown through createObjectURL or a FileReader object
+            (choosing local files supported too).</p>
+
+        <p>
+            <input type="file" id="take-picture" accept="image/*">
+        </p>
+
+        <h2>Preview:</h2>
+
+        <p>
+            <img src="about:blank" alt="" id="show-picture">
+        </p>
+
+        <p id="error"></p>
+
+    </section>
+
+    <p class="footer">All the code is available in the <a
+            href="https://github.com/robnyman/robnyman.github.com/tree/master/camera-api">Camera API repository on
+        GitHub</a>.</p>
 </div>
+
+
+<script>
+    (function () {
+        var takePicture = document.querySelector("#take-picture"),
+                showPicture = document.querySelector("#show-picture");
+
+        if (takePicture && showPicture) {
+            // Set events
+            takePicture.onchange = function (event) {
+                // Get a reference to the taken picture or chosen file
+                var files = event.target.files,
+                        file;
+                if (files && files.length > 0) {
+                    file = files[0];
+                    try {
+                        // Create ObjectURL
+                        var imgURL = window.URL.createObjectURL(file);
+
+                        // Set img src to ObjectURL
+                        showPicture.src = imgURL;
+
+                        // Revoke ObjectURL
+                        URL.revokeObjectURL(imgURL);
+                    }
+                    catch (e) {
+                        try {
+                            // Fallback if createObjectURL is not supported
+                            var fileReader = new FileReader();
+                            fileReader.onload = function (event) {
+                                showPicture.src = event.target.result;
+                            };
+                            fileReader.readAsDataURL(file);
+                        }
+                        catch (e) {
+                            //
+                            var error = document.querySelector("#error");
+                            if (error) {
+                                error.innerHTML = "Neither createObjectURL or FileReader are supported";
+                            }
+                        }
+                    }
+                }
+            };
+        }
+    })();
+
+
+</script>
+
+
 </body>
 </html>
