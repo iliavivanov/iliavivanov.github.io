@@ -11,36 +11,63 @@
 <div class="container">
     <h1>Camera API</h1>
 
-    <section class="main-content">
-        <p>A demo of the Camera API, currently implemented in Firefox and Google Chrome on Android. Choose to take a
-            picture with your device's camera and a preview will be shown through createObjectURL or a FileReader object
-            (choosing local files supported too).</p>
+    <div id="container">
+        <canvas id="picture" width="320" height="240"></canvas>
+        <input id="take-picture" type="file" accept="image/*;capture=camera"/>
+        <img id="show-picture" src="" alt="">
 
-        <p>
-            <input type="file" id="take-picture" accept="image/*">
-        </p>
+        <p id="result"></p>
+    </div>
 
-        <h2>Preview:</h2>
-
-        <p>
-            <img src="" alt="" id="show-picture">
-        </p>
-
-        <p id="error"></p>
-
-    </section>
-
-    <p class="footer">All the code is available in the <a
-            href="https://github.com/robnyman/robnyman.github.com/tree/master/camera-api">Camera API repository on
-        GitHub</a>.</p>
 </div>
 
 
 <script>
     (function () {
         var takePicture = document.querySelector("#take-picture"),
-                showPicture = document.querySelector("#show-picture");
+                showPicture = document.querySelector("#show-picture"),
+                canvas = document.querySelector("#picture"),
+                ctx = canvas.getContext("2d"),
+                result = document.querySelector("#error");
 
+        if(takePicture && showPicture) {
+            takePicture.onchange = function (event) {
+                var files = event.target.files;
+                if (files && files.length > 0) {
+                    file = files[0];
+                    try {
+                        var URL = window.URL || window.webkitURL;
+                        showPicture.onload = function(event) {
+                            result.innerHTML="";
+                            // JOB.DecodeImage(showPicture);
+                            URL.revokeObjectURL(showPicture.src);
+                        };
+                        showPicture.src = URL.createObjectURL(file);
+                    }
+                    catch (e) {
+                        try {
+                            var fileReader = new FileReader();
+                            fileReader.onload = function (event) {
+                                showPicture.onload = function(event) {
+                                    result.innerHTML="";
+                                    console.log("filereader");
+                                    //JOB.DecodeImage(showPicture);
+                                };
+                                showPicture.src = event.target.result;
+                            };
+                            fileReader.readAsDataURL(file);
+                        }
+                        catch (e) {
+                            result.innerHTML = "Neither createObjectURL or FileReader are supported";
+                        }
+                    }
+                }
+            };
+        }
+
+
+
+        /*
         if (takePicture && showPicture) {
             // Set events
             takePicture.onchange = function (event) {
@@ -70,15 +97,15 @@
                         }
                         catch (e) {
                             //
-                            var error = document.querySelector("#error");
-                            if (error) {
-                                error.innerHTML = "Neither createObjectURL or FileReader are supported";
+                            if (result) {
+                                result.innerHTML = "Neither createObjectURL or FileReader are supported";
                             }
                         }
                     }
                 }
             };
         }
+        */
     })();
 
 
