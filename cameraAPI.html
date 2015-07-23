@@ -3,43 +3,86 @@
 <head>
     <meta charset="utf-8">
     <title>Camera API</title>
-    <link rel="stylesheet" href="css/base.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="resources/css/quaggaJS/styles.css" type="text/css" media="screen">
 </head>
-
 <body>
+<section id="container" class="container">
+    <h4>Result:</h4>
 
-<div class="container">
-    <h1>Camera API</h1>
+    <p id="result"></p>
 
-    <div id="container">
-        <canvas id="picture" width="320" height="240"></canvas>
-        <input id="take-picture" type="file" accept="image/*;capture=camera"/>
-        <img id="show-picture" src="" width="480" height="640" alt="">
+    <h4>Info:</h4>
 
-        <p id="result"></p>
-    </div>
+    <p id="info"></p>
 
-</div>
-
-
+    <input id="take-picture" type="file" accept="image/*;capture=camera"/>
+    <img id="show-picture" src="" width="320" height="240" alt="">
+</section>
 <script>
     (function () {
         var takePicture = document.querySelector("#take-picture"),
                 showPicture = document.querySelector("#show-picture"),
-                canvas = document.querySelector("#picture"),
-                ctx = canvas.getContext("2d"),
-                result = document.querySelector("#error");
+                result = document.querySelector("#result"),
+                info = document.querySelector("#info");
+        var patternMac = /^[0-9a-f]{12}$/i;
 
-        if(takePicture && showPicture) {
+        getValidString("080064001064", patternMac);
+        getValidString("08006400106", patternMac);
+        getValidString("08006400106A", patternMac);
+        getValidString("08006400106G", patternMac);
+        getValidString("080064001064A", patternMac);
+        getValidString("", patternMac);
+        getValidString('', patternMac);
+        getValidString(null, patternMac);
+
+        function getValidString(mac, pattern) {
+            var test = pattern.test(mac);
+            console.log("Check value '%s' matching to pattern '%s' = %s", mac, pattern, test);
+            if (test) {
+                return mac;
+            }
+            return '';
+        }
+
+        function setResult(_result) {
+            console.log("Set result '%s'", _result);
+
+            var validResult = getValidString(_result, patternMac);
+            if (0 === validResult.length) {
+                console.log("Result '%s' is valid", _result);
+                result.innerHTML = validResult;
+            } else {
+                console.log("Result '%s' is invalid", _result);
+                result.innerHTML = validResult;
+            }
+            setInfo('');
+        }
+
+        function setInfo(message) {
+            console.log("Set info message '%s'", message);
+            info.innerHTML = message;
+        }
+
+        function decodeImage(image) {
+            console.log("Starting decode image");
+
+            // TODO
+            // DECODE
+            var decodedMac = "080064001064";
+
+            setResult(decodedMac);
+        }
+
+        if (takePicture && showPicture) {
             takePicture.onchange = function (event) {
                 var files = event.target.files;
                 if (files && files.length > 0) {
                     file = files[0];
                     try {
                         var URL = window.URL || window.webkitURL;
-                        showPicture.onload = function(event) {
-                            result.innerHTML="";
-                            // JOB.DecodeImage(showPicture);
+                        showPicture.onload = function (event) {
+                            result.innerHTML = "";
+                            decodeImage(showPicture);
                             URL.revokeObjectURL(showPicture.src);
                         };
                         showPicture.src = URL.createObjectURL(file);
@@ -48,64 +91,24 @@
                         try {
                             var fileReader = new FileReader();
                             fileReader.onload = function (event) {
-                                showPicture.onload = function(event) {
-                                    result.innerHTML="";
-                                    console.log("filereader");
-                                    //JOB.DecodeImage(showPicture);
+                                showPicture.onload = function (event) {
+                                    result.innerHTML = "";
+                                    console.log("Used FileReader");
+                                    decodeImage(showPicture);
                                 };
                                 showPicture.src = event.target.result;
                             };
                             fileReader.readAsDataURL(file);
                         }
                         catch (e) {
-                            result.innerHTML = "Neither createObjectURL or FileReader are supported";
+                            console.log('Neither createObjectURL or FileReader are supported');
+                            setResult('');
+                            setInfo('Your browser does not support this function');
                         }
                     }
                 }
             };
         }
-
-
-
-        /*
-        if (takePicture && showPicture) {
-            // Set events
-            takePicture.onchange = function (event) {
-                // Get a reference to the taken picture or chosen file
-                var files = event.target.files,
-                        file;
-                if (files && files.length > 0) {
-                    file = files[0];
-                    try {
-                        // Create ObjectURL
-                        var imgURL = window.URL.createObjectURL(file);
-
-                        // Set img src to ObjectURL
-                        showPicture.src = imgURL;
-
-                        // Revoke ObjectURL
-                        URL.revokeObjectURL(imgURL);
-                    }
-                    catch (e) {
-                        try {
-                            // Fallback if createObjectURL is not supported
-                            var fileReader = new FileReader();
-                            fileReader.onload = function (event) {
-                                showPicture.src = event.target.result;
-                            };
-                            fileReader.readAsDataURL(file);
-                        }
-                        catch (e) {
-                            //
-                            if (result) {
-                                result.innerHTML = "Neither createObjectURL or FileReader are supported";
-                            }
-                        }
-                    }
-                }
-            };
-        }
-        */
     })();
 
 
