@@ -1,6 +1,10 @@
 // QRCODE reader Copyright 2011 Lazar Laszlo
 // http://www.webqr.com
 
+
+
+
+
 function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
@@ -27,3 +31,12 @@ function load() {
         console.log("sorry your browser is not supported");
     }
 }
+
+
+if (isCanvasSupported() && window.File && window.FileReader) {
+    qrcode.callback = read;
+    console.log("111");
+} else {
+    console.log("sorry your browser is not supported");
+}
+
