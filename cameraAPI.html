@@ -26,16 +26,18 @@
                 info = document.querySelector("#info");
         var patternMac = /^[0-9a-f]{12}$/i;
 
-        getValidString("080064001064", patternMac);
-        getValidString("08006400106", patternMac);
-        getValidString("08006400106A", patternMac);
-        getValidString("08006400106a", patternMac);
-        getValidString("08006400106-", patternMac);
-        getValidString("08006400106G", patternMac);
-        getValidString("080064001064A", patternMac);
-        getValidString("", patternMac);
-        getValidString('', patternMac);
-        getValidString(null, patternMac);
+        /*
+         getValidString("080064001064", patternMac);
+         getValidString("08006400106", patternMac);
+         getValidString("08006400106A", patternMac);
+         getValidString("08006400106a", patternMac);
+         getValidString("08006400106-", patternMac);
+         getValidString("08006400106G", patternMac);
+         getValidString("080064001064A", patternMac);
+         getValidString("", patternMac);
+         getValidString('', patternMac);
+         getValidString(null, patternMac);
+         */
 
         function getValidString(mac, pattern) {
             var test = pattern.test(mac);
@@ -83,7 +85,7 @@
                     try {
                         var URL = window.URL || window.webkitURL;
                         showPicture.onload = function (event) {
-                            result.innerHTML = "";
+                            setResult('');
                             decodeImage(showPicture);
                             URL.revokeObjectURL(showPicture.src);
                         };
@@ -94,7 +96,7 @@
                             var fileReader = new FileReader();
                             fileReader.onload = function (event) {
                                 showPicture.onload = function (event) {
-                                    result.innerHTML = "";
+                                    setResult('');
                                     console.log("Used FileReader");
                                     decodeImage(showPicture);
                                 };

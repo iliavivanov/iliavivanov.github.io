@@ -1314,6 +1314,19 @@ qrcode.callback = null;
 qrcode.decode = function (d) {
     if (arguments.length == 0) {
         var b = document.getElementById("qr-canvas");
+        if (b) {
+            b = document.createElement('canvas');
+            b.setAttribute("id", "qr-canvas");
+            b.style.width = "800px";
+            b.style.height = "600px";
+            b.width = 800;
+            b.height = 600;
+            //var c = b.getContext("2d");
+            //c.clearRect(0, 0, 800, 600);
+
+            var head = document.getElementsByTagName('head')[0];
+            head.insertBefore(b, head.firstChild);
+        }
         var a = b.getContext("2d");
         qrcode.width = b.width;
         qrcode.height = b.height;
@@ -1327,6 +1340,20 @@ qrcode.decode = function (d) {
         var c = new Image();
         c.onload = function () {
             var g = document.getElementById("out-canvas");
+            if (g) {
+                g = document.createElement('canvas');
+                g.setAttribute("id", "out-canvas");
+                g.style.width = "320px";
+                g.style.height = "240px";
+                g.width = 320;
+                g.height = 240;
+                //var c = g.getContext("2d");
+                //c.clearRect(0, 0, 800, 600);
+
+                var head = document.getElementsByTagName('head')[0];
+                head.insertBefore(g, head.firstChild);
+            }
+
             if (g != null) {
                 var j = g.getContext("2d");
                 j.clearRect(0, 0, 320, 240);
